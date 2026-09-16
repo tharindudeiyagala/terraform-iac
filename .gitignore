@@ -1,0 +1,40 @@
+# Terraform local data, state and saved plans (including workspace state).
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+terraform.tfstate.d/
+*.tfplan
+*.plan
+plan.out
+crash.log
+crash.*.log
+.terraform-tools/
+
+# Real client inputs and backend configuration; sanitized examples are allowed.
+*.tfvars
+*.tfvars.json
+!*.example.tfvars
+!*.example.tfvars.json
+*.tfbackend
+!*.example.tfbackend
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Credentials and private keys.
+.aws/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.ppk
+credentials
+credentials.*
+id_rsa*
+id_ed25519*
+
+# Commit .terraform.lock.hcl to pin provider versions and checksums.
