@@ -71,3 +71,28 @@ ecs_desired_count                = 0 # Keep zero until a linux/amd64 image is pu
 ecs_log_group_name               = "/ecs/new-cinema-production/web"
 ecs_log_retention_days           = 30
 ecs_log_stream_prefix            = "web"
+
+# API infrastructure. Empty names derive from cinema_name/environment.
+# Existing clients can omit these inputs to use the API defaults.
+api_ecr_repository_name     = "new-cinema-api"
+api_ecs_cluster_name        = "new-cinema-api-cluster-prod"
+api_ecs_service_name        = "new-cinema-api-service"
+api_ecs_task_family         = "new-cinema-api-td"
+api_ecs_container_name      = "new-cinema-api"
+api_alb_security_group_name = "new-cinema-production-api-alb-sg"
+api_ecs_security_group_name = "new-cinema-production-api-ecs-sg"
+api_alb_name                = "new-cinema-prod-api-alb"
+api_alb_target_group_name   = "new-cinema-production-api-tg"
+
+api_ecs_task_role_name               = "ecsTaskExecutionRole"
+api_ecs_execution_role_name          = "ecsTaskExecutionRole"
+api_ecs_image_tag                    = "latest"
+api_ecs_task_cpu                     = 1024
+api_ecs_task_memory                  = 2048
+api_ecs_container_cpu                = 1024
+api_ecs_container_memory             = 2048
+api_ecs_container_memory_reservation = 1024
+api_ecs_desired_count                = 0 # Push a linux/amd64 API image before starting tasks.
+api_ecs_log_group_name               = "/ecs/new-cinema-production/api"
+api_ecs_log_retention_days           = 30
+api_ecs_log_stream_prefix            = "ecs"

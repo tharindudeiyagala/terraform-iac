@@ -9,6 +9,10 @@ count **0**), an ALB and Regional EFS. See [WEB-INFRASTRUCTURE.md](WEB-INFRASTRU
 for all new variables, existing IAM role prerequisites, image requirements,
 CloudFront quotas, EFS mount limitations and extension deployment steps.
 
+A separate API ECR repository, Fargate cluster/service and ALB use the same VPC.
+See [API-INFRASTRUCTURE.md](API-INFRASTRUCTURE.md) for API-specific inputs,
+`/health.php` checks and short deployment steps. API tasks also start at **0**.
+
 ## Files
 
 | File | Purpose |
@@ -23,6 +27,9 @@ CloudFront quotas, EFS mount limitations and extension deployment steps.
 | `ecr.tf`, `ecs.tf` | Private image repository, Fargate cluster, task and zero-task service |
 | `alb.tf`, `web-security-groups.tf` | HTTP ALB, IP target group and three restricted security groups |
 | `efs.tf` | Encrypted Regional EFS, disabled backups and private mount targets |
+| `api-variables.tf`, `api-locals.tf` | Independent API inputs and derived names |
+| `api-ecr.tf`, `api-ecs.tf` | API repository, Fargate cluster, task, logs and service |
+| `api-alb.tf`, `api-security-groups.tf`, `api-outputs.tf` | API ALB, target group, restricted ingress and outputs |
 | `outputs.tf` | Network, instance, security group and database connection outputs |
 | `new-cinema-prod.example.tfvars` | Sanitized example without a database password |
 | `mysql84-reserved-words.txt` | MySQL 8.4 reserved keywords for input validation |
