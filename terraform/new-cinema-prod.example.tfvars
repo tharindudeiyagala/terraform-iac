@@ -44,3 +44,30 @@ additional_tags = {
 }
 
 # Required db_password deliberately omitted. Supply via secure prompt/environment.
+
+# Web infrastructure. Empty name overrides derive from cinema_name/environment.
+ecr_repository_name     = "new-cinema-web"
+ecs_cluster_name        = "new-cinema-web-cluster-prod"
+ecs_service_name        = "new-cinema-web-service"
+ecs_task_family         = "new-cinema-web-td"
+ecs_container_name      = "new-cinema-web"
+alb_security_group_name = "new-cinema-production-alb-sg"
+ecs_security_group_name = "new-cinema-production-ecs-sg"
+efs_security_group_name = "new-cinema-production-efs-sg"
+alb_name                = "new-cinema-prod-web-alb"
+alb_target_group_name   = "new-cinema-production-web-tg"
+efs_name                = "new-cinema-prod"
+efs_creation_token      = "" # Stable default: new-cinema-production-efs.
+
+ecs_task_role_name               = "ecsTaskExecutionRole"
+ecs_execution_role_name          = "ecsTaskExecutionRole"
+ecs_image_tag                    = "latest"
+ecs_task_cpu                     = 1024
+ecs_task_memory                  = 2048
+ecs_container_cpu                = 1024
+ecs_container_memory             = 2048
+ecs_container_memory_reservation = 1024
+ecs_desired_count                = 0 # Keep zero until a linux/amd64 image is pushed.
+ecs_log_group_name               = "/ecs/new-cinema-production/web"
+ecs_log_retention_days           = 30
+ecs_log_stream_prefix            = "web"

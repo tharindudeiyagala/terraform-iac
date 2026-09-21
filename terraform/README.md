@@ -4,6 +4,11 @@ This root module creates one cinema environment in one AWS Region. Customize
 variables for each client; resource definitions are shared. No resources have
 been deployed as part of this implementation.
 
+The root now also provisions ECR, an ECS Fargate web service (initial desired
+count **0**), an ALB and Regional EFS. See [WEB-INFRASTRUCTURE.md](WEB-INFRASTRUCTURE.md)
+for all new variables, existing IAM role prerequisites, image requirements,
+CloudFront quotas, EFS mount limitations and extension deployment steps.
+
 ## Files
 
 | File | Purpose |
@@ -14,6 +19,10 @@ been deployed as part of this implementation.
 | `security-groups.tf` | EC2/RDS groups, CloudFront lookup and quota check |
 | `ec2.tf` | Canonical Ubuntu AMI discovery and public EC2 |
 | `rds.tf` | Private MySQL, audit options, optional slow-query parameters, log groups |
+| `web-variables.tf`, `web-locals.tf` | Web resource names, sizing, logs and defaults |
+| `ecr.tf`, `ecs.tf` | Private image repository, Fargate cluster, task and zero-task service |
+| `alb.tf`, `web-security-groups.tf` | HTTP ALB, IP target group and three restricted security groups |
+| `efs.tf` | Encrypted Regional EFS, disabled backups and private mount targets |
 | `outputs.tf` | Network, instance, security group and database connection outputs |
 | `new-cinema-prod.example.tfvars` | Sanitized example without a database password |
 | `mysql84-reserved-words.txt` | MySQL 8.4 reserved keywords for input validation |
@@ -137,7 +146,7 @@ Regional option/version compatibility still requires the checks below.
 
 ## Read-only AWS prerequisites
 
-Use Terraform >=1.9, <2.0 and AWS provider >=6.0, <7.0. Commit
+Use Terraform >=1.9, <2.0 and AWS provider >=6.64.0, <7.0. Commit
 `.terraform.lock.hcl` (currently AWS 6.64.0). Install AWS CLI, preferably v2.
 Authenticate using the standard credential chain, `AWS_PROFILE`, SSO, or an IAM
 role; never put access keys in Terraform. For example, set
@@ -145,6 +154,8 @@ role; never put access keys in Terraform. For example, set
 normal login workflow.
 
 The deployer needs EC2/VPC, RDS and CloudWatch Logs management permissions,
+plus the ECR/ECS/ELB/EFS and existing-role permissions described in
+[the extension prerequisites](WEB-INFRASTRUCTURE.md#iam-and-account-prerequisites),
 Canonical SSM read access, and `servicequotas:GetServiceQuota`. RDS may require
 creation of its service-linked role on first use. Terraform also reads AZs,
 images, key pairs, instance types and RDS offerings. No IAM policies are created.
@@ -342,4 +353,3 @@ credentials`. **No live plan, regional quota check or account-specific RDS
 option/version/class verification was possible.** Complete the read-only checks
 and supply real client inputs before deployment. The example key-pair name is
 a placeholder.
-
