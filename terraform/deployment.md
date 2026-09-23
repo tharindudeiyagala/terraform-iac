@@ -6,7 +6,7 @@ Set-Location C:\Data\terraform-iac\terraform
 
 aws configure --profile lanka-deploy - added AK SK Region 
 
-aws sts get-caller-identity    - check user can access
+aws sts get-caller-identity --profile lanka-deploy    - check user can access
 
 Copy-Item new-cinema-prod.example.tfvars lanka-cinema-prod.tfvars - copy varible example file into our cinema name
 
@@ -44,7 +44,10 @@ finally {
 
 terraform show ".\lanka-cinema-full.tfplan" - review the plan
 
-terraform apply ".\lanka-cinema-full.tfplan" - apply the plan
+
+terraform apply ".\lanka-cinema-prod.tfvars" - apply the plan
+
+terraform apply "-var-file=lanka-cinema-prod.tfvars"
 
 
 ------------ Terraform Destory All Resource  ---------------
